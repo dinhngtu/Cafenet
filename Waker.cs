@@ -35,8 +35,10 @@ namespace Cafenet {
         }
 
         void Restart() {
-            uint old = SetThreadExecutionState(ES_CONTINUOUS);
-            SetThreadExecutionState((old & ~ES_DISPLAY_REQUIRED) | (ScreenOn ? ES_DISPLAY_REQUIRED : 0));
+            uint old = SetThreadExecutionState(ES_CONTINUOUS) & ~ES_DISPLAY_REQUIRED;
+            if ((old & ~ES_CONTINUOUS) != 0) {
+                SetThreadExecutionState(old | (ScreenOn ? ES_DISPLAY_REQUIRED : 0));
+            }
         }
 
         public void ThreadProc() {
