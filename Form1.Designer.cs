@@ -55,7 +55,7 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(174, 76);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 98);
             // 
             // timeLeftToolStripMenuItem
             // 
@@ -68,7 +68,7 @@
             this.add4HoursToolStripMenuItem,
             this.keepEnabledToolStripMenuItem});
             this.timeLeftToolStripMenuItem.Name = "timeLeftToolStripMenuItem";
-            this.timeLeftToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.timeLeftToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.timeLeftToolStripMenuItem.Text = "ThisShouldChange";
             // 
             // turnOffToolStripMenuItem
@@ -124,18 +124,19 @@
             // 
             this.keepScreenOnToolStripMenuItem.CheckOnClick = true;
             this.keepScreenOnToolStripMenuItem.Name = "keepScreenOnToolStripMenuItem";
-            this.keepScreenOnToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.keepScreenOnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.keepScreenOnToolStripMenuItem.Text = "Keep &screen on";
+            this.keepScreenOnToolStripMenuItem.CheckedChanged += new System.EventHandler(this.keepScreenOnToolStripMenuItem_CheckedChanged);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(170, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 

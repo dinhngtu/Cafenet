@@ -62,17 +62,18 @@ namespace Cafenet {
 
         private void UpdateTimer(DateTime reference) {
             if (Deadline == DateTime.MaxValue) {
-                timeLeftToolStripMenuItem.Text = "&Enabled";
+                notifyIcon1.Text = timeLeftToolStripMenuItem.Text = "&Enabled";
                 TimerStart();
                 return;
             }
 
             var timeLeft = Deadline - reference;
             if (timeLeft > TimeSpan.Zero) {
-                timeLeftToolStripMenuItem.Text = $"Time l&eft: {(int)timeLeft.TotalHours,2:00}:{timeLeft.Minutes,2:00}";
+                notifyIcon1.Text = timeLeftToolStripMenuItem.Text = $"Time l&eft: {(int)timeLeft.TotalHours,2:00}:{timeLeft.Minutes,2:00}";
                 TimerStart();
             } else {
                 timeLeftToolStripMenuItem.Text = "Keep awak&e";
+                notifyIcon1.Text = "Cafen&et";
                 TimerStop();
             }
         }
