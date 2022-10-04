@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -28,9 +29,14 @@ namespace Cafenet {
         /// </summary>
         [STAThread]
         static void Main() {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CafenetApplicationContext());
+            using (var m = new Mutex(true, "{87C138DF-39DE-4EE3-9EEC-3C1D6221A8C8}", out var created)) {
+                if (!created) {
+                    return;
+                }
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new CafenetApplicationContext());
+            }
         }
     }
 }
