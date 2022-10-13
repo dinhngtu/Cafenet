@@ -10,10 +10,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Cafenet {
     enum CafeModes {
         Deadline,
+        UntilLock,
         UntilUnlock,
         Perpetual,
     }
@@ -45,7 +47,8 @@ namespace Cafenet {
         }
 
         private void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e) {
-            if (e.Reason == SessionSwitchReason.SessionUnlock && Mode == CafeModes.UntilUnlock) {
+            if ((e.Reason == SessionSwitchReason.SessionLock && Mode == CafeModes.UntilLock) ||
+                (e.Reason == SessionSwitchReason.SessionUnlock && Mode == CafeModes.UntilUnlock)) {
                 Mode = CafeModes.Deadline;
                 Deadline = DateTime.MinValue;
                 UpdateTimer(DateTime.Now);
@@ -84,29 +87,35 @@ namespace Cafenet {
                 case CafeModes.Deadline:
                     if (timeLeft > TimeSpan.Zero) {
                         notifyIcon1.Text = timeLeftToolStripMenuItem.Text = $"Time l&eft: {(int)timeLeft.TotalHours,2:00}:{timeLeft.Minutes,2:00}";
-                        turnOffToolStripMenuItem.Checked = untilunlockToolStripMenuItem.Checked = keepEnabledToolStripMenuItem.Checked = false;
-                        TimerStart();
                     } else {
                         timeLeftToolStripMenuItem.Text = "Keep awak&e";
                         notifyIcon1.Text = "Cafen&et";
-                        turnOffToolStripMenuItem.Checked = true;
-                        untilunlockToolStripMenuItem.Checked = keepEnabledToolStripMenuItem.Checked = false;
-                        TimerStop();
                     }
+                    break;
+                case CafeModes.UntilLock:
+                    notifyIcon1.Text = timeLeftToolStripMenuItem.Text = "&Enabled until lock";
                     break;
                 case CafeModes.UntilUnlock:
                     notifyIcon1.Text = timeLeftToolStripMenuItem.Text = "&Enabled until unlock";
-                    untilunlockToolStripMenuItem.Checked = true;
-                    turnOffToolStripMenuItem.Checked = keepEnabledToolStripMenuItem.Checked = false;
-                    TimerStart();
                     break;
                 case CafeModes.Perpetual:
                     notifyIcon1.Text = timeLeftToolStripMenuItem.Text = "&Enabled";
-                    keepEnabledToolStripMenuItem.Checked = true;
-                    turnOffToolStripMenuItem.Checked = untilunlockToolStripMenuItem.Checked = false;
-                    TimerStart();
                     break;
             }
+            if (Mode == CafeModes.Deadline && timeLeft <= TimeSpan.Zero) {
+                TimerStop();
+            } else {
+                TimerStart();
+            }
+            turnOffToolStripMenuItem.Checked = Mode == CafeModes.Deadline && timeLeft <= TimeSpan.Zero;
+            add15MinutesToolStripMenuItem.Enabled =
+                add30MinutesToolStripMenuItem.Enabled =
+                add1HourToolStripMenuItem.Enabled =
+                add2HoursToolStripMenuItem.Enabled =
+                add4HoursToolStripMenuItem.Enabled = Mode == CafeModes.Deadline;
+            untillockToolStripMenuItem.Checked = Mode == CafeModes.UntilLock;
+            untilunlockToolStripMenuItem.Checked = Mode == CafeModes.UntilUnlock;
+            keepEnabledToolStripMenuItem.Checked = Mode == CafeModes.Perpetual;
         }
 
         private void turnOffToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -146,6 +155,11 @@ namespace Cafenet {
 
         private void add4HoursToolStripMenuItem_Click(object sender, EventArgs e) {
             AddMinutes(240);
+        }
+
+        private void untillockToolStripMenuItem_Click(object sender, EventArgs e) {
+            Mode = CafeModes.UntilLock;
+            UpdateTimer(DateTime.Now);
         }
 
         private void untilunlockToolStripMenuItem_Click(object sender, EventArgs e) {

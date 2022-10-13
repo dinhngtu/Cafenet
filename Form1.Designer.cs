@@ -33,12 +33,13 @@
             this.add1HourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.add2HoursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.add4HoursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.untilunlockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keepEnabledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keepScreenOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.untilunlockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.untillockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,6 +68,7 @@
             this.add1HourToolStripMenuItem,
             this.add2HoursToolStripMenuItem,
             this.add4HoursToolStripMenuItem,
+            this.untillockToolStripMenuItem,
             this.untilunlockToolStripMenuItem,
             this.keepEnabledToolStripMenuItem});
             this.timeLeftToolStripMenuItem.Name = "timeLeftToolStripMenuItem";
@@ -115,6 +117,13 @@
             this.add4HoursToolStripMenuItem.Text = "Add &4 hours";
             this.add4HoursToolStripMenuItem.Click += new System.EventHandler(this.add4HoursToolStripMenuItem_Click);
             // 
+            // untilunlockToolStripMenuItem
+            // 
+            this.untilunlockToolStripMenuItem.Name = "untilunlockToolStripMenuItem";
+            this.untilunlockToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.untilunlockToolStripMenuItem.Text = "Until &unlock";
+            this.untilunlockToolStripMenuItem.Click += new System.EventHandler(this.untilunlockToolStripMenuItem_Click);
+            // 
             // keepEnabledToolStripMenuItem
             // 
             this.keepEnabledToolStripMenuItem.Name = "keepEnabledToolStripMenuItem";
@@ -147,12 +156,12 @@
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // untilunlockToolStripMenuItem
+            // untillockToolStripMenuItem
             // 
-            this.untilunlockToolStripMenuItem.Name = "untilunlockToolStripMenuItem";
-            this.untilunlockToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.untilunlockToolStripMenuItem.Text = "Until &unlock";
-            this.untilunlockToolStripMenuItem.Click += new System.EventHandler(this.untilunlockToolStripMenuItem_Click);
+            this.untillockToolStripMenuItem.Name = "untillockToolStripMenuItem";
+            this.untillockToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.untillockToolStripMenuItem.Text = "Until &lock";
+            this.untillockToolStripMenuItem.Click += new System.EventHandler(this.untillockToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -185,6 +194,7 @@
         private System.Windows.Forms.ToolStripMenuItem keepEnabledToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem untilunlockToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem untillockToolStripMenuItem;
     }
 }
 
