@@ -72,13 +72,11 @@ namespace Cafenet {
             if (!timer1.Enabled) {
                 timer1.Start();
             }
-            notifyIcon1.Icon = Properties.Resources.iconon;
         }
 
         void TimerStop() {
             Waker.Commands.Add(new WakerStop());
             timer1.Stop();
-            notifyIcon1.Icon = Properties.Resources.iconoff;
         }
 
         private void UpdateTimer(DateTime reference) {
@@ -102,12 +100,15 @@ namespace Cafenet {
                     notifyIcon1.Text = timeLeftToolStripMenuItem.Text = "&Enabled";
                     break;
             }
-            if (Mode == CafeModes.Deadline && timeLeft <= TimeSpan.Zero) {
+            var inactive = Mode == CafeModes.Deadline && timeLeft <= TimeSpan.Zero;
+            if (inactive) {
                 TimerStop();
+                notifyIcon1.Icon = Properties.Resources.Asleep;
             } else {
                 TimerStart();
+                notifyIcon1.Icon = Properties.Resources.Awake;
             }
-            turnOffToolStripMenuItem.Checked = Mode == CafeModes.Deadline && timeLeft <= TimeSpan.Zero;
+            turnOffToolStripMenuItem.Checked = inactive;
             add15MinutesToolStripMenuItem.Enabled =
                 add30MinutesToolStripMenuItem.Enabled =
                 add1HourToolStripMenuItem.Enabled =

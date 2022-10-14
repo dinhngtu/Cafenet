@@ -63,9 +63,9 @@ namespace Cafenet.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon iconoff {
+        internal static System.Drawing.Icon Asleep {
             get {
-                object obj = ResourceManager.GetObject("iconoff", resourceCulture);
+                object obj = ResourceManager.GetObject("Asleep", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Cafenet.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon iconon {
+        internal static System.Drawing.Icon Awake {
             get {
-                object obj = ResourceManager.GetObject("iconon", resourceCulture);
+                object obj = ResourceManager.GetObject("Awake", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
