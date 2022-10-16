@@ -10,7 +10,7 @@
   <Identity
     Name="e09c331b-f535-4028-889d-e3aafb8f36e1"
     Publisher="CN=Dinh Ngoc Tu Code Signing"
-    Version="1.0.1.0" />
+    Version="1.1.2.0" />
 
   <Properties>
     <DisplayName>CafenetPackage</DisplayName>
