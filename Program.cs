@@ -14,8 +14,6 @@ namespace Cafenet {
         public CafenetApplicationContext() {
             form1 = new Form1();
             form1.FormClosed += Form1_FormClosed;
-            form1.ShowInTaskbar = false;
-            form1.Opacity = 0;
             form1.Show();
             form1.Hide();
             if (Util.GetCurrentPackageFullName() != null) {

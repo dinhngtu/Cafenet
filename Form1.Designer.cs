@@ -61,7 +61,7 @@
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 126);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(174, 104);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // timeLeftToolStripMenuItem
@@ -77,7 +77,7 @@
             this.untilunlockToolStripMenuItem,
             this.keepEnabledToolStripMenuItem});
             this.timeLeftToolStripMenuItem.Name = "timeLeftToolStripMenuItem";
-            this.timeLeftToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.timeLeftToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.timeLeftToolStripMenuItem.Text = "ThisShouldChange";
             // 
             // turnOffToolStripMenuItem
@@ -147,21 +147,21 @@
             // 
             this.keepScreenOnToolStripMenuItem.CheckOnClick = true;
             this.keepScreenOnToolStripMenuItem.Name = "keepScreenOnToolStripMenuItem";
-            this.keepScreenOnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.keepScreenOnToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.keepScreenOnToolStripMenuItem.Text = "Keep &screen on";
             this.keepScreenOnToolStripMenuItem.CheckedChanged += new System.EventHandler(this.keepScreenOnToolStripMenuItem_CheckedChanged);
             // 
             // runOnStartupToolStripSeparator
             // 
             this.runOnStartupToolStripSeparator.Name = "runOnStartupToolStripSeparator";
-            this.runOnStartupToolStripSeparator.Size = new System.Drawing.Size(177, 6);
+            this.runOnStartupToolStripSeparator.Size = new System.Drawing.Size(170, 6);
             this.runOnStartupToolStripSeparator.Visible = false;
             // 
             // runOnStartupToolStripMenuItem
             // 
             this.runOnStartupToolStripMenuItem.CheckOnClick = true;
             this.runOnStartupToolStripMenuItem.Name = "runOnStartupToolStripMenuItem";
-            this.runOnStartupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.runOnStartupToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.runOnStartupToolStripMenuItem.Text = "&Run at startup";
             this.runOnStartupToolStripMenuItem.Visible = false;
             this.runOnStartupToolStripMenuItem.CheckedChanged += new System.EventHandler(this.runOnStartupToolStripMenuItem_CheckedChanged);
@@ -169,12 +169,12 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -189,6 +189,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "Form1";
+            this.Opacity = 0D;
+            this.ShowInTaskbar = false;
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
