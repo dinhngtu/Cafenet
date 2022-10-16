@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using Windows.ApplicationModel;
 
 namespace Cafenet {
     enum CafeModes {
@@ -171,6 +172,33 @@ namespace Cafenet {
         private void keepEnabledToolStripMenuItem_Click(object sender, EventArgs e) {
             Mode = CafeModes.Perpetual;
             UpdateTimer(DateTime.Now);
+        }
+
+        async Task<StartupTask> GetStartupTaskAsync() {
+            if (Util.GetCurrentPackageFullName() != null) {
+                return (await StartupTask.GetForCurrentPackageAsync()).FirstOrDefault();
+            }
+            return null;
+        }
+
+        private async void contextMenuStrip1_Opening(object sender, CancelEventArgs e) {
+            var startupTask = await GetStartupTaskAsync();
+            runOnStartupToolStripSeparator.Visible = runOnStartupToolStripMenuItem.Visible = startupTask != null;
+            if (startupTask != null) {
+                runOnStartupToolStripMenuItem.Enabled = startupTask.State == StartupTaskState.Enabled || startupTask.State == StartupTaskState.Disabled;
+                runOnStartupToolStripMenuItem.Checked = startupTask.State == StartupTaskState.Enabled || startupTask.State == StartupTaskState.EnabledByPolicy;
+            }
+        }
+
+        private async void runOnStartupToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+            var startupTask = await GetStartupTaskAsync();
+            if (startupTask != null) {
+                if (runOnStartupToolStripMenuItem.Checked && startupTask.State == StartupTaskState.Disabled) {
+                    await startupTask.RequestEnableAsync();
+                } else if (!runOnStartupToolStripMenuItem.Checked && startupTask.State == StartupTaskState.Enabled) {
+                    startupTask.Disable();
+                }
+            }
         }
     }
 }
