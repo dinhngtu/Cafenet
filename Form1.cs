@@ -177,7 +177,7 @@ namespace Cafenet {
 
         async Task<StartupTask> GetStartupTaskAsync() {
             if (Util.GetCurrentPackageFullName() != null) {
-                return (await StartupTask.GetForCurrentPackageAsync()).FirstOrDefault();
+                return await StartupTask.GetAsync("{063370BB-B5F6-4DD0-8017-B0527C9DA4D7}");
             }
             return null;
         }
