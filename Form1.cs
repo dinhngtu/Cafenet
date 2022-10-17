@@ -85,29 +85,30 @@ namespace Cafenet {
             switch (Mode) {
                 case CafeModes.Deadline:
                     if (timeLeft > TimeSpan.Zero) {
-                        notifyIcon1.Text = timeLeftToolStripMenuItem.Text = $"Time l&eft: {(int)timeLeft.TotalHours,2:00}:{timeLeft.Minutes,2:00}";
+                        timeLeftToolStripMenuItem.Text = $"Time l&eft: {(int)timeLeft.TotalHours,2:00}:{timeLeft.Minutes,2:00}";
                     } else {
                         timeLeftToolStripMenuItem.Text = "Keep awak&e";
-                        notifyIcon1.Text = "Cafen&et";
                     }
                     break;
                 case CafeModes.UntilLock:
-                    notifyIcon1.Text = timeLeftToolStripMenuItem.Text = "&Enabled until lock";
+                    timeLeftToolStripMenuItem.Text = "&Enabled until lock";
                     break;
                 case CafeModes.UntilUnlock:
-                    notifyIcon1.Text = timeLeftToolStripMenuItem.Text = "&Enabled until unlock";
+                    timeLeftToolStripMenuItem.Text = "&Enabled until unlock";
                     break;
                 case CafeModes.Perpetual:
-                    notifyIcon1.Text = timeLeftToolStripMenuItem.Text = "&Enabled";
+                    timeLeftToolStripMenuItem.Text = "&Enabled";
                     break;
             }
             var inactive = Mode == CafeModes.Deadline && timeLeft <= TimeSpan.Zero;
             if (inactive) {
                 TimerStop();
                 notifyIcon1.Icon = Properties.Resources.Asleep;
+                notifyIcon1.Text = "Cafenet";
             } else {
                 TimerStart();
                 notifyIcon1.Icon = Properties.Resources.Awake;
+                notifyIcon1.Text = timeLeftToolStripMenuItem.Text.Replace("&", "");
             }
             turnOffToolStripMenuItem.Checked = inactive;
             add15MinutesToolStripMenuItem.Enabled =
