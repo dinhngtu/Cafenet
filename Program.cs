@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Windows.ApplicationModel;
 
 namespace Cafenet {
     internal class CafenetApplicationContext : ApplicationContext {
         Form1 form1;
+        PackageCatalog packageCatalog;
 
         public CafenetApplicationContext() {
             form1 = new Form1();
@@ -16,6 +18,14 @@ namespace Cafenet {
             form1.Opacity = 0;
             form1.Show();
             form1.Hide();
+            if (Util.GetCurrentPackageFullName() != null) {
+                packageCatalog = PackageCatalog.OpenForCurrentPackage();
+                packageCatalog.PackageUninstalling += PackageCatalog_PackageUninstalling;
+            }
+        }
+
+        private void PackageCatalog_PackageUninstalling(PackageCatalog sender, PackageUninstallingEventArgs args) {
+            form1.Close();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
