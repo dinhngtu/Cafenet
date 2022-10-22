@@ -34,7 +34,6 @@ namespace Cafenet {
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
-            ToastNotificationManagerCompat.Uninstall();
             ExitThread();
         }
     }
@@ -51,7 +50,11 @@ namespace Cafenet {
                 }
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new CafenetApplicationContext());
+                try {
+                    Application.Run(new CafenetApplicationContext());
+                } finally {
+                    ToastNotificationManagerCompat.Uninstall();
+                }
             }
         }
     }
