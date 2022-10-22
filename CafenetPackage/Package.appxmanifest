@@ -2,10 +2,12 @@
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  IgnorableNamespaces="uap rescap com desktop">
 
   <Identity
     Name="e09c331b-f535-4028-889d-e3aafb8f36e1"
@@ -44,6 +46,16 @@
         <uap5:Extension Category="windows.startupTask">
           <uap5:StartupTask TaskId="{063370BB-B5F6-4DD0-8017-B0527C9DA4D7}" Enabled="true" DisplayName="Cafenet" />
         </uap5:Extension>
+        <desktop:Extension Category="windows.toastNotificationActivation">
+          <desktop:ToastNotificationActivation ToastActivatorCLSID="CCC60FBB-413A-45DC-884D-737498AC8F2C" />
+        </desktop:Extension>
+        <com:Extension Category="windows.comServer">
+          <com:ComServer>
+            <com:ExeServer Executable="Cafenet\Cafenet.exe" Arguments="-ToastActivated" DisplayName="Cafenet toast activator">
+              <com:Class Id="CCC60FBB-413A-45DC-884D-737498AC8F2C" DisplayName="Cafenet toast activator" />
+            </com:ExeServer>
+          </com:ComServer>
+        </com:Extension>
       </Extensions>
     </Application>
   </Applications>

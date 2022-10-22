@@ -1,3 +1,4 @@
+using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -163,6 +164,13 @@ namespace Cafenet {
         private void untillockToolStripMenuItem_Click(object sender, EventArgs e) {
             Mode = CafeModes.UntilLock;
             UpdateTimer(DateTime.Now);
+            if (!keepScreenOnToolStripMenuItem.Checked) {
+                var toast = new ToastContentBuilder();
+                toast.AddText("Want to keep your screen on?");
+                toast.AddButton(new ToastButton().SetContent("Keep screen on").AddArgument("keepScreenOn"));
+                toast.AddButton(new ToastButton().SetContent("Dismiss"));
+                toast.Show();
+            }
         }
 
         private void untilunlockToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -199,6 +207,16 @@ namespace Cafenet {
                 } else if (!runOnStartupToolStripMenuItem.Checked && startupTask.State == StartupTaskState.Enabled) {
                     startupTask.Disable();
                 }
+            }
+        }
+
+        public void OnToastActivated(ToastNotificationActivatedEventArgsCompat e) {
+            if (ToastNotificationManagerCompat.WasCurrentProcessToastActivated()) {
+                return;
+            }
+            var args = ToastArguments.Parse(e.Argument);
+            if (args.Contains("keepScreenOn")) {
+                keepScreenOnToolStripMenuItem.Checked = true;
             }
         }
     }
