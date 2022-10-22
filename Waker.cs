@@ -20,25 +20,23 @@ namespace Cafenet {
     internal class Waker {
         public BlockingCollection<WakerCommand> Commands { get; set; }
 
+        bool Enabled { get; set; } = false;
+
         bool ScreenOn { get; set; } = false;
 
         public Waker() {
             Commands = new BlockingCollection<WakerCommand>();
         }
 
-        void Start() {
-            SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | (ScreenOn ? ES_DISPLAY_REQUIRED : 0));
-        }
-
-        void Stop() {
-            SetThreadExecutionState(ES_CONTINUOUS);
-        }
-
-        void Restart() {
-            uint old = SetThreadExecutionState(ES_CONTINUOUS) & ~ES_DISPLAY_REQUIRED;
-            if ((old & ~ES_CONTINUOUS) != 0) {
-                SetThreadExecutionState(old | (ScreenOn ? ES_DISPLAY_REQUIRED : 0));
+        void Update() {
+            uint flags = ES_CONTINUOUS;
+            if (Enabled) {
+                flags |= ES_SYSTEM_REQUIRED;
+                if (ScreenOn) {
+                    flags |= ES_DISPLAY_REQUIRED;
+                }
             }
+            SetThreadExecutionState(flags);
         }
 
         public void ThreadProc() {
@@ -46,19 +44,20 @@ namespace Cafenet {
                 var _cmd = Commands.Take();
                 switch (_cmd) {
                     case WakerExit _:
-                        Stop();
+                        Enabled = false;
+                        Update();
                         return;
                     case WakerStart _:
-                        Start();
+                        Enabled = true;
                         break;
                     case WakerStop _:
-                        Stop();
+                        Enabled = false;
                         break;
                     case WakerSetScreenOn cmd:
                         ScreenOn = cmd.Value;
-                        Restart();
                         break;
                 }
+                Update();
             }
         }
     }
