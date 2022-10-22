@@ -25,8 +25,9 @@ namespace Cafenet {
     public partial class Form1 : Form {
         Waker Waker { get; set; }
         Thread WakerThread { get; set; }
-        CafeModes Mode { get; set; }
-        DateTime Deadline { get; set; }
+        CafeModes Mode { get; set; } = CafeModes.Deadline;
+        DateTime Deadline { get; set; } = DateTime.MinValue;
+        bool KeepScreenOnThisTime { get; set; } = false;
 
         public Form1() {
             InitializeComponent();
@@ -67,6 +68,9 @@ namespace Cafenet {
 
         private void keepScreenOnToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             Waker.Commands.Add(new WakerSetScreenOn() { Value = keepScreenOnToolStripMenuItem.Checked });
+            if (!keepScreenOnToolStripMenuItem.Checked) {
+                KeepScreenOnThisTime = false;
+            }
         }
 
         void TimerStart() {
@@ -106,6 +110,9 @@ namespace Cafenet {
                 TimerStop();
                 notifyIcon1.Icon = Properties.Resources.Asleep;
                 notifyIcon1.Text = "Cafenet";
+                if (KeepScreenOnThisTime) {
+                    keepScreenOnToolStripMenuItem.Checked = false;
+                }
             } else {
                 TimerStart();
                 notifyIcon1.Icon = Properties.Resources.Awake;
@@ -166,7 +173,7 @@ namespace Cafenet {
             UpdateTimer(DateTime.Now);
             if (!keepScreenOnToolStripMenuItem.Checked) {
                 var toast = new ToastContentBuilder();
-                toast.AddText("Want to keep your screen on?");
+                toast.AddText("Want to keep your screen on just this time?");
                 toast.AddButton(new ToastButton().SetContent("Keep screen on").AddArgument("keepScreenOn"));
                 toast.AddButton(new ToastButton().SetContent("Dismiss"));
                 toast.Show();
@@ -213,6 +220,7 @@ namespace Cafenet {
         public void OnToastActivated(ToastNotificationActivatedEventArgsCompat e) {
             var args = ToastArguments.Parse(e.Argument);
             if (args.Contains("keepScreenOn")) {
+                KeepScreenOnThisTime = true;
                 keepScreenOnToolStripMenuItem.Checked = true;
             }
         }
