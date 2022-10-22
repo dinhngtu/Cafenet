@@ -211,9 +211,6 @@ namespace Cafenet {
         }
 
         public void OnToastActivated(ToastNotificationActivatedEventArgsCompat e) {
-            if (ToastNotificationManagerCompat.WasCurrentProcessToastActivated()) {
-                return;
-            }
             var args = ToastArguments.Parse(e.Argument);
             if (args.Contains("keepScreenOn")) {
                 keepScreenOnToolStripMenuItem.Checked = true;

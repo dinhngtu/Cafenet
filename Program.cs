@@ -26,6 +26,10 @@ namespace Cafenet {
         }
 
         private void ToastNotificationManagerCompat_OnActivated(ToastNotificationActivatedEventArgsCompat e) {
+            if (ToastNotificationManagerCompat.WasCurrentProcessToastActivated()) {
+                form1.Close();
+                return;
+            }
             form1.BeginInvoke(new ToastNotificationManagerCompatActivatedDelegate(form1.OnToastActivated), new object[] { e });
         }
 
@@ -53,6 +57,7 @@ namespace Cafenet {
                 try {
                     Application.Run(new CafenetApplicationContext());
                 } finally {
+                    ToastNotificationManagerCompat.History.Clear();
                     ToastNotificationManagerCompat.Uninstall();
                 }
             }
