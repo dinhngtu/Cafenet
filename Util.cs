@@ -10,7 +10,7 @@ namespace Cafenet {
     internal static class Util {
         public static string GetCurrentPackageFullName() {
             // https://github.com/microsoft/Windows-AppConsult-Tools-DesktopBridgeHelpers/blob/master/DesktopBridge.Helpers/Helpers.cs
-            if ((Environment.OSVersion.Version.Major < 6) || (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor < 1)) {
+            if (Environment.OSVersion.Version < new Version(6, 2, 0, 0)) {
                 return null;
             }
 
