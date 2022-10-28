@@ -118,6 +118,9 @@ namespace Cafenet {
                 notifyIcon1.Icon = Properties.Resources.Awake;
                 notifyIcon1.Text = timeLeftToolStripMenuItem.Text.Replace("&", "");
             }
+            if (keepScreenOnToolStripMenuItem.Checked) {
+                notifyIcon1.Text += " (screen on)";
+            }
             turnOffToolStripMenuItem.Checked = inactive;
             add15MinutesToolStripMenuItem.Enabled =
                 add30MinutesToolStripMenuItem.Enabled =
