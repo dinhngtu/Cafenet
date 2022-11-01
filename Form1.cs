@@ -96,7 +96,7 @@ namespace Cafenet {
                     }
                     break;
                 case CafeModes.UntilLock:
-                    timeLeftToolStripMenuItem.Text = "&Enabled until lock";
+                    timeLeftToolStripMenuItem.Text = $"&Enabled until {(KeepScreenOnThisTime ? "next " : "")}lock";
                     break;
                 case CafeModes.UntilUnlock:
                     timeLeftToolStripMenuItem.Text = "&Enabled until unlock";
