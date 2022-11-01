@@ -96,7 +96,7 @@ namespace Cafenet {
                     }
                     break;
                 case CafeModes.UntilLock:
-                    timeLeftToolStripMenuItem.Text = $"&Enabled until {(KeepScreenOnThisTime ? "next " : "")}lock";
+                    timeLeftToolStripMenuItem.Text = "&Enabled until lock";
                     break;
                 case CafeModes.UntilUnlock:
                     timeLeftToolStripMenuItem.Text = "&Enabled until unlock";
@@ -118,7 +118,7 @@ namespace Cafenet {
                 notifyIcon1.Icon = Properties.Resources.Awake;
                 notifyIcon1.Text = timeLeftToolStripMenuItem.Text.Replace("&", "");
                 if (keepScreenOnToolStripMenuItem.Checked) {
-                    notifyIcon1.Text += " (screen on)";
+                    notifyIcon1.Text += $" (screen on{(KeepScreenOnThisTime ? " this time" : "")})";
                 }
             }
             turnOffToolStripMenuItem.Checked = inactive;
