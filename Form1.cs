@@ -49,7 +49,6 @@ namespace Cafenet {
             WakerThread.Start();
             SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
             SystemEvents.SessionEnding += SystemEvents_SessionEnding;
-            SystemEvents.SessionEnded += SystemEvents_SessionEnded;
             UpdateTimer(DateTime.Now);
         }
 
@@ -71,9 +70,8 @@ namespace Cafenet {
 
         private void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e) {
             RegisterApplicationRestart($"-restore {Mode},{Deadline.Ticks},{KeepScreenOn},{KeepScreenOnThisTime}", RESTART_NO_REBOOT);
-        }
-
-        private void SystemEvents_SessionEnded(object sender, SessionEndedEventArgs e) {
+            // once SystemEvents_SessionEnding has fired, our main form might already be closing and we might already be past the point of return
+            // close ourselves to avoid complicated situations
             Close();
         }
 
