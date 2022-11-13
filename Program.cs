@@ -18,6 +18,15 @@ namespace Cafenet {
             form1.FormClosed += Form1_FormClosed;
             form1.Show();
             form1.Hide();
+
+            var args = Environment.GetCommandLineArgs();
+            for (var i = 0; i < args.Length - 1; i++) {
+                if (args[i] == "-restore") {
+                    form1.ParseRestartArgs(args[i + 1]);
+                    break;
+                }
+            }
+
             ToastNotificationManagerCompat.OnActivated += ToastNotificationManagerCompat_OnActivated;
             if (Util.GetCurrentPackageFullName() != null) {
                 packageCatalog = PackageCatalog.OpenForCurrentPackage();

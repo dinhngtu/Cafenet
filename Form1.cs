@@ -14,6 +14,8 @@ using System.Windows.Forms;
 using System.Xml;
 using Windows.ApplicationModel;
 
+using static Cafenet.NativeMethods;
+
 namespace Cafenet {
     enum CafeModes {
         Deadline,
@@ -27,6 +29,14 @@ namespace Cafenet {
         Thread WakerThread { get; set; }
         CafeModes Mode { get; set; } = CafeModes.Deadline;
         DateTime Deadline { get; set; } = DateTime.MinValue;
+        bool KeepScreenOn {
+            get {
+                return keepScreenOnToolStripMenuItem.Checked;
+            }
+            set {
+                keepScreenOnToolStripMenuItem.Checked = value;
+            }
+        }
         bool KeepScreenOnThisTime { get; set; } = false;
 
         public Form1() {
@@ -38,12 +48,13 @@ namespace Cafenet {
             WakerThread = new Thread(Waker.ThreadProc);
             WakerThread.Start();
             SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
+            SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+            SystemEvents.SessionEnded += SystemEvents_SessionEnded;
             UpdateTimer(DateTime.Now);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
             TimerStop();
-            SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
             notifyIcon1.Visible = false;
             Waker.Commands.Add(new WakerExit());
             WakerThread.Join();
@@ -56,6 +67,14 @@ namespace Cafenet {
                 Deadline = DateTime.MinValue;
                 UpdateTimer(DateTime.Now);
             }
+        }
+
+        private void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e) {
+            RegisterApplicationRestart($"-restore {Mode},{Deadline.Ticks},{KeepScreenOn},{KeepScreenOnThisTime}", RESTART_NO_REBOOT);
+        }
+
+        private void SystemEvents_SessionEnded(object sender, SessionEndedEventArgs e) {
+            Close();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -225,6 +244,24 @@ namespace Cafenet {
             if (args.Contains("keepScreenOn")) {
                 KeepScreenOnThisTime = true;
                 keepScreenOnToolStripMenuItem.Checked = true;
+            }
+        }
+
+        public void ParseRestartArgs(string restartArgs) {
+            var settings = restartArgs.Split(',');
+            if (settings.Length == 4) {
+                try {
+                    var mode = (CafeModes)Enum.Parse(typeof(CafeModes), settings[0]);
+                    var deadline = new DateTime(long.Parse(settings[1]));
+                    var keepScreenOn = bool.Parse(settings[2]);
+                    var keepScreenOnThisTime = bool.Parse(settings[3]);
+                    Mode = mode;
+                    Deadline = deadline;
+                    KeepScreenOn = keepScreenOn;
+                    KeepScreenOnThisTime = keepScreenOnThisTime;
+                    UpdateTimer(DateTime.Now);
+                } catch {
+                }
             }
         }
     }
