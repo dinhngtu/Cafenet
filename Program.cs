@@ -5,12 +5,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Windows.ApplicationModel;
 
 namespace Cafenet {
     internal class CafenetApplicationContext : ApplicationContext {
         readonly Form1 form1;
-        readonly PackageCatalog packageCatalog;
         delegate void ToastNotificationManagerCompatActivatedDelegate(ToastNotificationActivatedEventArgsCompat e);
 
         public CafenetApplicationContext() {
@@ -28,10 +26,6 @@ namespace Cafenet {
             }
 
             ToastNotificationManagerCompat.OnActivated += ToastNotificationManagerCompat_OnActivated;
-            if (Util.GetCurrentPackageFullName() != null) {
-                packageCatalog = PackageCatalog.OpenForCurrentPackage();
-                packageCatalog.PackageUninstalling += PackageCatalog_PackageUninstalling;
-            }
         }
 
         private void ToastNotificationManagerCompat_OnActivated(ToastNotificationActivatedEventArgsCompat e) {
@@ -40,10 +34,6 @@ namespace Cafenet {
                 return;
             }
             form1.BeginInvoke(new ToastNotificationManagerCompatActivatedDelegate(form1.OnToastActivated), new object[] { e });
-        }
-
-        private void PackageCatalog_PackageUninstalling(PackageCatalog sender, PackageUninstallingEventArgs args) {
-            form1.Close();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
