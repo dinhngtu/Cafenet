@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using Windows.ApplicationModel;
+using Windows.System;
 
 using static Cafenet.NativeMethods;
 
@@ -221,7 +222,7 @@ namespace Cafenet {
             var startupTask = await GetStartupTaskAsync();
             runOnStartupToolStripSeparator.Visible = runOnStartupToolStripMenuItem.Visible = startupTask != null;
             if (startupTask != null) {
-                runOnStartupToolStripMenuItem.Enabled = startupTask.State == StartupTaskState.Enabled || startupTask.State == StartupTaskState.Disabled;
+                runOnStartupToolStripMenuItem.Enabled = startupTask.State == StartupTaskState.Enabled || startupTask.State == StartupTaskState.Disabled || startupTask.State == StartupTaskState.DisabledByUser;
                 runOnStartupToolStripMenuItem.Checked = startupTask.State == StartupTaskState.Enabled || startupTask.State == StartupTaskState.EnabledByPolicy;
             }
         }
@@ -229,7 +230,10 @@ namespace Cafenet {
         private async void runOnStartupToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             var startupTask = await GetStartupTaskAsync();
             if (startupTask != null) {
-                if (runOnStartupToolStripMenuItem.Checked && startupTask.State == StartupTaskState.Disabled) {
+                if (runOnStartupToolStripMenuItem.Checked && startupTask.State == StartupTaskState.DisabledByUser) {
+                    runOnStartupToolStripMenuItem.Checked = false;
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures-app"));
+                } else if (runOnStartupToolStripMenuItem.Checked && startupTask.State == StartupTaskState.Disabled) {
                     await startupTask.RequestEnableAsync();
                 } else if (!runOnStartupToolStripMenuItem.Checked && startupTask.State == StartupTaskState.Enabled) {
                     startupTask.Disable();
