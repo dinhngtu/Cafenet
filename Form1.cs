@@ -70,7 +70,14 @@ namespace Cafenet {
         }
 
         private void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e) {
-            RegisterApplicationRestart($"-restore {Mode},{Deadline.Ticks},{KeepScreenOn},{KeepScreenOnThisTime}", RESTART_NO_REBOOT);
+            var restartArgs = new object[] {
+                Mode,
+                Deadline.Ticks,
+                KeepScreenOn,
+                KeepScreenOnThisTime,
+                keepEnabledToolStripMenuItem.Checked,
+            };
+            RegisterApplicationRestart($"-restore {string.Join(",", restartArgs)}", RESTART_NO_REBOOT);
             // once SystemEvents_SessionEnding has fired, our main form might already be closing and we might already be past the point of return
             // close ourselves to avoid complicated situations
             Close();
@@ -148,9 +155,17 @@ namespace Cafenet {
             untillockToolStripMenuItem.Checked = Mode == CafeModes.UntilLock;
             untilunlockToolStripMenuItem.Checked = Mode == CafeModes.UntilUnlock;
             keepEnabledToolStripMenuItem.Checked = Mode == CafeModes.Perpetual;
+            if (sleepOnFinishToolStripMenuItem.Checked && inactive) {
+                sleepOnFinishToolStripMenuItem.Checked = false;
+                try {
+                    NativeUtilities.SuspendSystem();
+                } catch {
+                }
+            }
         }
 
         private void turnOffToolStripMenuItem_Click(object sender, EventArgs e) {
+            sleepOnFinishToolStripMenuItem.Checked = false;
             Mode = CafeModes.Deadline;
             Deadline = DateTime.MinValue;
             UpdateTimer(DateTime.Now);
@@ -170,7 +185,7 @@ namespace Cafenet {
         }
 
         private void add15MinutesToolStripMenuItem_Click(object sender, EventArgs e) {
-            AddMinutes(15);
+            AddMinutes(1);
         }
 
         private void add30MinutesToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -251,16 +266,21 @@ namespace Cafenet {
 
         public void ParseRestartArgs(string restartArgs) {
             var settings = restartArgs.Split(',');
-            if (settings.Length == 4) {
+            if (settings.Length >= 4) {
                 try {
                     var mode = (CafeModes)Enum.Parse(typeof(CafeModes), settings[0]);
                     var deadline = new DateTime(long.Parse(settings[1]));
                     var keepScreenOn = bool.Parse(settings[2]);
                     var keepScreenOnThisTime = bool.Parse(settings[3]);
+                    bool sleepOnFinish = false;
+                    if (settings.Length >= 5) {
+                        sleepOnFinish = bool.Parse(settings[4]);
+                    }
                     Mode = mode;
                     Deadline = deadline;
                     KeepScreenOn = keepScreenOn;
                     KeepScreenOnThisTime = keepScreenOnThisTime;
+                    sleepOnFinishToolStripMenuItem.Checked = sleepOnFinish;
                     UpdateTimer(DateTime.Now);
                 } catch {
                 }

@@ -28,22 +28,23 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.timeLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.turnOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.add15MinutesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.add30MinutesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.add1HourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.add2HoursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.add4HoursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.untillockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.untilunlockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keepEnabledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sleepOnFinishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keepScreenOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runOnStartupToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.runOnStartupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,13 +58,14 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.timeLeftToolStripMenuItem,
+            this.sleepOnFinishToolStripMenuItem,
             this.keepScreenOnToolStripMenuItem,
             this.runOnStartupToolStripSeparator,
             this.runOnStartupToolStripMenuItem,
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 126);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 148);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // timeLeftToolStripMenuItem
@@ -87,65 +89,82 @@
             // turnOffToolStripMenuItem
             // 
             this.turnOffToolStripMenuItem.Name = "turnOffToolStripMenuItem";
-            this.turnOffToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.turnOffToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.turnOffToolStripMenuItem.Text = "&Off";
             this.turnOffToolStripMenuItem.Click += new System.EventHandler(this.turnOffToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(174, 6);
             // 
             // add15MinutesToolStripMenuItem
             // 
             this.add15MinutesToolStripMenuItem.Name = "add15MinutesToolStripMenuItem";
-            this.add15MinutesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.add15MinutesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.add15MinutesToolStripMenuItem.Text = "Add 15 minutes (&Q)";
             this.add15MinutesToolStripMenuItem.Click += new System.EventHandler(this.add15MinutesToolStripMenuItem_Click);
             // 
             // add30MinutesToolStripMenuItem
             // 
             this.add30MinutesToolStripMenuItem.Name = "add30MinutesToolStripMenuItem";
-            this.add30MinutesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.add30MinutesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.add30MinutesToolStripMenuItem.Text = "Add 30 minutes (&H)";
             this.add30MinutesToolStripMenuItem.Click += new System.EventHandler(this.add30MinutesToolStripMenuItem_Click);
             // 
             // add1HourToolStripMenuItem
             // 
             this.add1HourToolStripMenuItem.Name = "add1HourToolStripMenuItem";
-            this.add1HourToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.add1HourToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.add1HourToolStripMenuItem.Text = "Add &1 hour";
             this.add1HourToolStripMenuItem.Click += new System.EventHandler(this.add1HourToolStripMenuItem_Click);
             // 
             // add2HoursToolStripMenuItem
             // 
             this.add2HoursToolStripMenuItem.Name = "add2HoursToolStripMenuItem";
-            this.add2HoursToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.add2HoursToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.add2HoursToolStripMenuItem.Text = "Add &2 hours";
             this.add2HoursToolStripMenuItem.Click += new System.EventHandler(this.add2HoursToolStripMenuItem_Click);
             // 
             // add4HoursToolStripMenuItem
             // 
             this.add4HoursToolStripMenuItem.Name = "add4HoursToolStripMenuItem";
-            this.add4HoursToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.add4HoursToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.add4HoursToolStripMenuItem.Text = "Add &4 hours";
             this.add4HoursToolStripMenuItem.Click += new System.EventHandler(this.add4HoursToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(174, 6);
             // 
             // untillockToolStripMenuItem
             // 
             this.untillockToolStripMenuItem.Name = "untillockToolStripMenuItem";
-            this.untillockToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.untillockToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.untillockToolStripMenuItem.Text = "Until &lock";
             this.untillockToolStripMenuItem.Click += new System.EventHandler(this.untillockToolStripMenuItem_Click);
             // 
             // untilunlockToolStripMenuItem
             // 
             this.untilunlockToolStripMenuItem.Name = "untilunlockToolStripMenuItem";
-            this.untilunlockToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.untilunlockToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.untilunlockToolStripMenuItem.Text = "Until &unlock";
             this.untilunlockToolStripMenuItem.Click += new System.EventHandler(this.untilunlockToolStripMenuItem_Click);
             // 
             // keepEnabledToolStripMenuItem
             // 
             this.keepEnabledToolStripMenuItem.Name = "keepEnabledToolStripMenuItem";
-            this.keepEnabledToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.keepEnabledToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.keepEnabledToolStripMenuItem.Text = "Perp&etually";
             this.keepEnabledToolStripMenuItem.Click += new System.EventHandler(this.keepEnabledToolStripMenuItem_Click);
+            // 
+            // sleepOnFinishToolStripMenuItem
+            // 
+            this.sleepOnFinishToolStripMenuItem.CheckOnClick = true;
+            this.sleepOnFinishToolStripMenuItem.Name = "sleepOnFinishToolStripMenuItem";
+            this.sleepOnFinishToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sleepOnFinishToolStripMenuItem.Text = "S&leep on finish";
             // 
             // keepScreenOnToolStripMenuItem
             // 
@@ -187,16 +206,6 @@
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -235,6 +244,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem sleepOnFinishToolStripMenuItem;
     }
 }
 
