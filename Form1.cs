@@ -1,17 +1,12 @@
 using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 using Windows.ApplicationModel;
 using Windows.System;
 
@@ -51,9 +46,52 @@ namespace Cafenet {
             SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
             SystemEvents.SessionEnding += SystemEvents_SessionEnding;
             UpdateTimer(DateTime.Now);
+            HookNotifyIcon();
+        }
+
+        private NativeWindow GetNotifyWindow() {
+            return notifyIcon1.GetType().GetField("window", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(notifyIcon1) as NativeWindow;
+        }
+
+        delegate IntPtr SubclassProc(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, UIntPtr dwRefData);
+        IntPtr _scProc = IntPtr.Zero;
+        SubclassProc _scDelegate;
+
+        IntPtr MyNotifyIconSubclassProc(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, UIntPtr dwRefData) {
+            if (uMsg == NativeMethods.WM_ACTIVATE) {
+                NativeMethods.ShowWindow(hWnd, SW_HIDE);
+            }
+            return NativeMethods.DefSubclassProc(hWnd, uMsg, wParam, lParam);
+        }
+
+        private void HookNotifyIcon() {
+            var notifyWindow = GetNotifyWindow();
+            if (notifyWindow == null) {
+                return;
+            }
+            _scDelegate = new SubclassProc(MyNotifyIconSubclassProc);
+            _scProc = Marshal.GetFunctionPointerForDelegate(_scDelegate);
+            if (!NativeMethods.SetWindowSubclass(notifyWindow.Handle, _scProc, UIntPtr.Zero, UIntPtr.Zero)) {
+                _scProc = IntPtr.Zero;
+                _scDelegate = null;
+            }
+        }
+
+        private void UnhookNotifyIcon() {
+            var notifyWindow = GetNotifyWindow();
+            if (notifyWindow == null) {
+                return;
+            }
+            if (_scProc == IntPtr.Zero) {
+                return;
+            }
+            RemoveWindowSubclass(notifyWindow.Handle, _scProc, UIntPtr.Zero);
+            _scProc = IntPtr.Zero;
+            _scDelegate = null;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+            UnhookNotifyIcon();
             TimerStop();
             notifyIcon1.Visible = false;
             Waker.Commands.Add(new WakerExit());

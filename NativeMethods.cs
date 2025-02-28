@@ -50,6 +50,9 @@ namespace Cafenet {
 
         public static readonly string SE_SHUTDOWN_NAME = "SeShutdownPrivilege";
 
+        public const uint WM_ACTIVATE = 0x0006;
+        public const int SW_HIDE = 0;
+
         [DllImport("kernel32.dll")]
         public static extern uint SetThreadExecutionState(uint esFlags);
 
@@ -73,6 +76,18 @@ namespace Cafenet {
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool CloseHandle(IntPtr hObject);
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("comctl32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetWindowSubclass(IntPtr hWnd, IntPtr pfnSubclass, UIntPtr uIdSubclass, UIntPtr dwRefData);
+        [DllImport("comctl32.dll")]
+        public static extern IntPtr DefSubclassProc(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam);
+        [DllImport("comctl32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool RemoveWindowSubclass(IntPtr hWnd, IntPtr pfnSubclass, UIntPtr uIdSubclass);
     }
 
     internal static class NativeUtilities {
